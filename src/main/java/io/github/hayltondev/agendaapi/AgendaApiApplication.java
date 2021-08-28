@@ -11,18 +11,6 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class AgendaApiApplication {
 
-
-	@Bean //com @Bean o commandLineRunner vai executar sempre que a app subir.
-	public CommandLineRunner commandLineRunner(@Autowired ContatoRepository repository){
-		return args -> {
-			Contato contato = new Contato();
-			contato.setNome("Haylton2");
-			contato.setEmail("haylton-email@gmail.com");
-			contato.setFavorito(false);
-			repository.save(contato);
-		};
-	}
-
 	public static void main(String[] args) {
 		SpringApplication.run(AgendaApiApplication.class, args);
 	}
