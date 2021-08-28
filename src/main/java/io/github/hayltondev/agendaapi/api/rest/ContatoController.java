@@ -4,6 +4,8 @@ import io.github.hayltondev.agendaapi.model.entity.Contato;
 import io.github.hayltondev.agendaapi.model.repository.ContatoRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,8 +35,12 @@ public class ContatoController {
     }
 
     @GetMapping
-    public List<Contato> listarContatos(){
-        return repository.findAll();
+    public Page<Contato> listarContatos(
+            @RequestParam(value = "page", defaultValue = "0") Integer pagina,
+            @RequestParam(value = "size", defaultValue = "5") Integer tamanhoPagina
+    ){
+        PageRequest pageRequest =  PageRequest.of(pagina, tamanhoPagina);
+        return repository.findAll(pageRequest);
     }
 
     @PatchMapping("{id}/favorito")  //o patch mapping faz uma atulização parcial enquanto o putMapping faz uma atualização total
